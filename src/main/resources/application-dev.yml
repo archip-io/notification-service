@@ -14,6 +14,12 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
       mail.smtp.ssl.enable: true
+  rabbitmq:
+    host: ${ARCHIPIO_NOTIFICATION_SERVICE_RABBITMQ_HOST}
+    port: ${ARCHIPIO_NOTIFICATION_SERVICE_RABBITMQ_PORT}
+    virtual-host: ${ARCHIPIO_NOTIFICATION_SERVICE_RABBITMQ_VIRTUAL_HOST}
+    username: ${ARCHIPIO_NOTIFICATION_SERVICE_RABBITMQ_USER}
+    password: ${ARCHIPIO_NOTIFICATION_SERVICE_RABBITMQ_PASSWORD}
 rest:
   clients:
     template-service:
