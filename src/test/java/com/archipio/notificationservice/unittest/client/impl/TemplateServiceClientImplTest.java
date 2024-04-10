@@ -73,14 +73,14 @@ class TemplateServiceClientImplTest {
     final var responseBody = "<h1>Hello</h1>";
 
     when(restClientProperties.getClients())
-            .thenReturn(
-                    Map.of(
-                            "template-service",
-                            RestClientProperties.ClientProperties.builder()
-                                    .url("http://template-service")
-                                    .build()));
+        .thenReturn(
+            Map.of(
+                "template-service",
+                RestClientProperties.ClientProperties.builder()
+                    .url("http://template-service")
+                    .build()));
     when(restTemplate.exchange(anyString(), eq(POST), eq(httpEntity), eq(String.class)))
-            .thenReturn(ResponseEntity.ok(responseBody));
+        .thenReturn(ResponseEntity.ok(responseBody));
 
     // Do
     var actualResponseBody = templateServiceClient.renderTemplate(renderDto);
@@ -97,18 +97,18 @@ class TemplateServiceClientImplTest {
     final var httpEntity = new HttpEntity<>(renderDto);
 
     when(restClientProperties.getClients())
-            .thenReturn(
-                    Map.of(
-                            "template-service",
-                            RestClientProperties.ClientProperties.builder()
-                                    .url("http://template-service")
-                                    .build()));
+        .thenReturn(
+            Map.of(
+                "template-service",
+                RestClientProperties.ClientProperties.builder()
+                    .url("http://template-service")
+                    .build()));
     when(restTemplate.exchange(anyString(), eq(POST), eq(httpEntity), eq(String.class)))
-            .thenThrow(new HttpClientErrorException(BAD_REQUEST));
+        .thenThrow(new HttpClientErrorException(BAD_REQUEST));
 
     // Do
     assertThatExceptionOfType(HttpClientErrorException.class)
-            .isThrownBy(() -> templateServiceClient.renderTemplate(renderDto));
+        .isThrownBy(() -> templateServiceClient.renderTemplate(renderDto));
 
     // Check
     verify(restTemplate, only()).exchange(anyString(), eq(POST), eq(httpEntity), eq(String.class));

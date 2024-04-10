@@ -18,3 +18,16 @@ rest:
   clients:
     template-service:
       url: ${ARCHIPIO_NOTIFICATION_SERVICE_TEMPLATE_SERVICE_URL}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+  prometheus:
+    metrics:
+      export:
+        enabled: true

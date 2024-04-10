@@ -155,11 +155,11 @@ public class ExceptionCatcher {
   @ExceptionHandler(MailException.class)
   public ResponseEntity<ErrorDto> handleMailException(HttpServletRequest request) {
     return ResponseEntity.status(BAD_REQUEST)
-            .body(
-                    ErrorDto.builder()
-                            .createdAt(Instant.now())
-                            .message(getMessage("exception.send-mail-failed", request))
-                            .build());
+        .body(
+            ErrorDto.builder()
+                .createdAt(Instant.now())
+                .message(getMessage("exception.send-mail-failed", request))
+                .build());
   }
 
   @ExceptionHandler(Exception.class)

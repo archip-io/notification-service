@@ -27,24 +27,24 @@ public class EmailController {
 
   @PreAuthorize("hasAuthority('SEND_MAIL')")
   @PostMapping(
-          value = SEND_EMAIL_SUFFIX,
-          consumes = {MediaType.TEXT_PLAIN_VALUE, MediaType.TEXT_HTML_VALUE})
+      value = SEND_EMAIL_SUFFIX,
+      consumes = {MediaType.TEXT_PLAIN_VALUE, MediaType.TEXT_HTML_VALUE})
   public ResponseEntity<Void> sendEmail(
-          @RequestParam("to") String to,
-          @RequestParam("subject") String subject,
-          @RequestBody String body) {
+      @RequestParam("to") String to,
+      @RequestParam("subject") String subject,
+      @RequestBody String body) {
     emailService.sendMessage(to, subject, body);
     return ResponseEntity.status(OK).build();
   }
 
   @PreAuthorize("hasAuthority('SEND_MAIL')")
   @PostMapping(
-          value = SEND_EMAIL_TEMPLATE_SUFFIX,
-          consumes = {MediaType.APPLICATION_JSON_VALUE})
+      value = SEND_EMAIL_TEMPLATE_SUFFIX,
+      consumes = {MediaType.APPLICATION_JSON_VALUE})
   public ResponseEntity<Void> sendTemplateEmail(
-          @RequestParam("to") String to,
-          @RequestParam("subject") String subject,
-          @RequestBody RenderDto renderDto) {
+      @RequestParam("to") String to,
+      @RequestParam("subject") String subject,
+      @RequestBody RenderDto renderDto) {
     emailService.sendTemplateMessage(to, subject, renderDto);
     return ResponseEntity.status(OK).build();
   }
