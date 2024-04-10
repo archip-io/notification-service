@@ -4,5 +4,5 @@ import com.archipio.notificationservice.dto.RenderDto;
 
 public interface TemplateServiceClient {
 
-    String renderTemplate(RenderDto renderDto);
+  String renderTemplate(RenderDto renderDto);
 }

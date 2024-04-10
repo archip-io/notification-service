@@ -1,6 +1,5 @@
 package com.archipio.notificationservice.config;
 
-import java.util.Locale;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -19,7 +18,6 @@ public class LocaleConfig {
   public ResourceBundleMessageSource messageSource() {
     final ResourceBundleMessageSource source = new ResourceBundleMessageSource();
     source.setUseCodeAsDefaultMessage(true);
-    source.setDefaultLocale(new Locale.Builder().setLanguage("ru").setRegion("RU").build());
     source.setDefaultEncoding("UTF-8");
     source.setBasename("lang/messages");
     return source;

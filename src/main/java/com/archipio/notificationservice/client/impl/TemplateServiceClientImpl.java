@@ -1,20 +1,19 @@
 package com.archipio.notificationservice.client.impl;
 
+import static java.lang.String.format;
+import static org.springframework.http.HttpMethod.POST;
+
 import com.archipio.notificationservice.client.TemplateServiceClient;
 import com.archipio.notificationservice.config.RestClientProperties;
 import com.archipio.notificationservice.dto.RenderDto;
 import com.archipio.notificationservice.exception.RestClientNotFoundException;
 import com.archipio.notificationservice.exception.RestClientUrlNotFoundException;
+import java.nio.charset.StandardCharsets;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.nio.charset.StandardCharsets;
-
-import static java.lang.String.format;
-import static org.springframework.http.HttpMethod.POST;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +30,11 @@ public class TemplateServiceClientImpl implements TemplateServiceClient {
   @Override
   public String renderTemplate(RenderDto renderDto) {
     var uri =
-            UriComponentsBuilder.fromHttpUrl(getUserServiceUrl())
-                    .path(RENDER_TEMPLATE_PATH)
-                    .encode(StandardCharsets.UTF_8)
-                    .build()
-                    .toUriString();
+        UriComponentsBuilder.fromHttpUrl(getUserServiceUrl())
+            .path(RENDER_TEMPLATE_PATH)
+            .encode(StandardCharsets.UTF_8)
+            .build()
+            .toUriString();
     var body = new HttpEntity<>(renderDto);
     return restTemplate.exchange(uri, POST, body, String.class).getBody();
   }
@@ -50,7 +49,7 @@ public class TemplateServiceClientImpl implements TemplateServiceClient {
       userServiceUrl = clientProperties.getUrl();
       if (userServiceUrl == null) {
         throw new RestClientUrlNotFoundException(
-                format("Client %s URL is null", TEMPLATE_SERVICE_NAME));
+            format("Client %s URL is null", TEMPLATE_SERVICE_NAME));
       }
     }
     return userServiceUrl;
