@@ -14,3 +14,7 @@ spring:
       mail.smtp.auth: true
       mail.smtp.starttls.enable: true
       mail.smtp.ssl.enable: true
+rest:
+  clients:
+    template-service:
+      url: ${ARCHIPIO_NOTIFICATION_SERVICE_TEMPLATE_SERVICE_URL}
