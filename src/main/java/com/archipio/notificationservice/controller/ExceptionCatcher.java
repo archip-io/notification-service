@@ -26,6 +26,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -134,6 +135,13 @@ public class ExceptionCatcher {
                 .build());
   }
 
+  @ExceptionHandler(HttpClientErrorException.class)
+  public ResponseEntity<String> handleHttpClientErrorException(HttpClientErrorException e) {
+    var code = e.getStatusCode();
+    var body = e.getResponseBodyAsString();
+    return ResponseEntity.status(code).body(body);
+  }
+
   @ExceptionHandler(AccessDeniedException.class)
   public ResponseEntity<ErrorDto> handleAccessDeniedException(HttpServletRequest request) {
     return ResponseEntity.status(FORBIDDEN)
@@ -147,11 +155,11 @@ public class ExceptionCatcher {
   @ExceptionHandler(MailException.class)
   public ResponseEntity<ErrorDto> handleMailException(HttpServletRequest request) {
     return ResponseEntity.status(BAD_REQUEST)
-        .body(
-            ErrorDto.builder()
-                .createdAt(Instant.now())
-                .message(getMessage("exception.send-mail-failed", request))
-                .build());
+            .body(
+                    ErrorDto.builder()
+                            .createdAt(Instant.now())
+                            .message(getMessage("exception.send-mail-failed", request))
+                            .build());
   }
 
   @ExceptionHandler(Exception.class)
