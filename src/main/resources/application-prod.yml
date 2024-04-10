@@ -1,0 +1,33 @@
+server:
+  port: 18085
+spring:
+  application:
+    name: notification-service
+  mail:
+    protocol: smtps
+    host: ${ARCHIPIO_NOTIFICATION_SERVICE_MAIL_HOST}
+    port: ${ARCHIPIO_NOTIFICATION_SERVICE_MAIL_PORT}
+    username: ${ARCHIPIO_NOTIFICATION_SERVICE_MAIL_USERNAME}
+    password: ${ARCHIPIO_NOTIFICATION_SERVICE_MAIL_PASSWORD}
+    test-connection: true
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.ssl.enable: true
+rest:
+  clients:
+    template-service:
+      url: ${ARCHIPIO_NOTIFICATION_SERVICE_TEMPLATE_SERVICE_URL}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        "[http.server.requests]": true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
